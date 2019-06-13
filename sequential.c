@@ -12,6 +12,9 @@
  * -------------------------------------------------------------------------- */
 
 
+// TODO:    PEEP DISTANCE STRUCTURE!
+
+
 #include "sequential.h"
 
 #define NUM_BODIES      50
@@ -287,10 +290,11 @@ int collisions_detected(void)
   int collision = 0;  // Boolean representing if collision occured.
   double distance = 0.0;
 
-  for (i = 0; i < num_bodies; i++)
+  for (i = 0; i < num_bodies - 1; i++)
   {
     for (j = i + 1; j < num_bodies; j++)
     {
+        // TODO: SPEED THIS SHIT UP MAYBE DISTANCE STRUCTURE??????
       // Calculate distance between current pair of bodies.
       distance = sqrt(pow((position[i]->x - position[j]->x), 2) +
           pow((position[i]->y - position[j]->y), 2));
@@ -449,7 +453,9 @@ void export_positions(void)
 
 /* -----------------------------------------------------------------------------
  * Routine:     main
- * Description: description
+ * Description: Doesn't do much, just calls methods to do all the work instead.
+ *              Records system time before and after doing the work however to
+ *              be used for measurement of execution time.
  * Arguments:   argv1 - number of bodies
  *              argv2 - radius of each body
  *              argv3 - number of time steps

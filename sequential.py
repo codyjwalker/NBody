@@ -19,6 +19,7 @@
  "
  " --------------------------------------------------------------------------"""
 
+            # TODO: SPEED UP WITH DISTANCES LIST OR SUM10
 
 import math
 
@@ -52,6 +53,50 @@ collisions = [] # List of collisions that occurred in current timestep.
 """--------------------------------------------------------------------------"""
 """------------------------------ Functions ---------------------------------"""
 """--------------------------------------------------------------------------"""
+
+
+"""-----------------------------------------------------------------------------
+ " Function:    print_coordinates
+ " Description: Prints out the position coordinates of every body in the
+ "              simulation.
+ " Arguments:   None.
+ " Returns:     Nothing.
+ " --------------------------------------------------------------------------"""
+def print_coordinates():
+    print("POSITIONS:\n")
+    for i in range(NUM_BODIES):
+        print("Body", i, "x =", xposition[i], "y =", yposition[i])
+    return
+    """ END print_coordinates() """
+
+
+"""-----------------------------------------------------------------------------
+ " Function:    print_velocities
+ " Description: Prints out the velocities of every body in the simulation.
+ " Arguments:   None.
+ " Returns:     Nothing.
+ " --------------------------------------------------------------------------"""
+def print_velocities():
+    print("VELOCITIES:\n")
+    for i in range(NUM_BODIES):
+        print("Body", i, "vx =", xvelocity[i], "vy =", yvelocity[i])
+    return
+    """ END print_velocities() """
+
+
+"""-----------------------------------------------------------------------------
+ " Function:    print_forces
+ " Description: Prints out the net forces acting upon every body in the
+ "              simulation.
+ " Arguments:   None.
+ " Returns:     Nothing.
+ " --------------------------------------------------------------------------"""
+def print_forces():
+    print("FORCES:\n")
+    for i in range(NUM_BODIES):
+        print("Body", i, "x =", xposition[i], "y =", yposition[i])
+    return
+    """ END print_forces() """
 
 
 """-----------------------------------------------------------------------------
@@ -166,8 +211,62 @@ def move_bodies():
 
 
 """-----------------------------------------------------------------------------
- " Function:    func
- " Description: desc
+ " Function:    collisions_detected
+ " Description: Checks the current state of the simulation, and determines
+ "              whether or not the previous movement calculation has caused any
+ "              collisions to occur.
+ " Arguments:   None.
+ " Returns:     1 if any collisions have occured, 0 otherwise.
+ " --------------------------------------------------------------------------"""
+def collisions_detected():
+    is_collision    # Boolean representing if collision occurred.
+    for i in range(NUM_BODIES - 1):
+        for j in range(i + 1, NUM_BODIES):
+            # TODO: SPEED UP WITH DISTANCES LIST OR SUM10
+            # Calculate distance between current pair of bodies.
+            x_dist_chunk = (xposition[i] - xposition[j]) * (xposition[i] -
+                                                            xposition[j])
+            y_dist_chunk = (yposition[i] - yposition[j]) * (yposition[i] -
+                                                            yposition[j])
+            distance = math.sqrt(x_dist_chunk + y_dist_chunk)
+            if (distance < (2 * BODY_RADIUS)):
+                if (pdb):
+                    print("\nCOLLISION!!!!!!!\n")
+                # Mark that these two objects in particular collided.
+                add_collision(i,j)
+                is_collision = 1
+    return is_collision
+    """ END collisions_detected() """
+
+
+"""-----------------------------------------------------------------------------
+ " Function:    resolve_collisions
+ " Description: Called when two or more objects are in a "state of collision"
+ "              to properly determine their new velocities and positions
+ "              resulting from them colliding.  Without this method, not only
+ "              would objects pass through eachother, but because the
+ "              magnitude of the force of gravity becomes exponentially larger
+ "              the closer together bodies get, the bodies would become under
+ "              tremendous force and fly off at comical speeds in the direction
+ "              they were just heading.  Very important function.
+ "              NOTE:
+ "              THE PROCEDURES USED TO CALCULATE THE FINAL VELOCITIES OF THE
+ "              OBJECTS ARE TAKEN FROM DR. HOMER'S HANDOUT WHICH IS BADED ON
+ "              "2-Dimensional Elastic Collisions Without Trigonometry" by
+ "              Chad Bercheck, AND IS NOT MY OWN ORIGINAL MATERIAL.
+ " Arguments:   None.
+ " Returns:     Nothing.
+ " --------------------------------------------------------------------------"""
+def resolve_collisions():
+    return
+    """ END resolve_collisions() """
+
+
+"""-----------------------------------------------------------------------------
+ " Function:    export_positions
+ " Description: Writes the information contained inside the position array at
+ "              the current timeframe to a .txt file for a GUI to read and
+ "              use to generate a visualization of the simulation.
  " Arguments:   None.
  " Returns:     Nothing.
  " --------------------------------------------------------------------------"""
@@ -176,75 +275,52 @@ def export_positions():
     """ END export_positions() """
 
 
-
-
 """-----------------------------------------------------------------------------
- " Function:    print_coordinates
- " Description: Prints out the position coordinates of every body in the
- "              simulation.
- " Arguments:   None.
- " Returns:     Nothing.
+ " Function:    main
+ " Description: Doesn't do much, just calls functions to do all the work
+ "              instead.  Records system time before and after doing the work
+ "              to be used for measurement of execution time.
+ " Arguments:   argv1 - number of bodies
+ "              argv2 - radius of each body
+ "              argv3 - number of time steps
+ "              argv4 - 1 to enable output for gui, 0 otherwise
+ "              argv5 - number of dimensions to run simulation in (2 or 3)
+ " Returns:     Appropriate exit status of program.
  " --------------------------------------------------------------------------"""
-def print_coordinates():
-    print("POSITIONS:\n")
-    for i in range(NUM_BODIES):
-        print("Body", i, "x =", xposition[i], "y =", yposition[i])
-    return
-    """ END print_coordinates() """
+def main():
 
+    # TODO: Time calculation bs
 
-"""-----------------------------------------------------------------------------
- " Function:    print_velocities
- " Description: Prints out the velocities of every body in the simulation.
- " Arguments:   None.
- " Returns:     Nothing.
- " --------------------------------------------------------------------------"""
-def print_velocities():
-    print("VELOCITIES:\n")
-    for i in range(NUM_BODIES):
-        print("Body", i, "vx =", xvelocity[i], "vy =", yvelocity[i])
-    return
-    """ END print_velocities() """
-
-
-"""-----------------------------------------------------------------------------
- " Function:    print_forces
- " Description: Prints out the net forces acting upon every body in the
- "              simulation.
- " Arguments:   None.
- " Returns:     Nothing.
- " --------------------------------------------------------------------------"""
-def print_forces():
-    print("FORCES:\n")
-    for i in range(NUM_BODIES):
-        print("Body", i, "x =", xposition[i], "y =", yposition[i])
-    return
-    """ END print_forces() """
-
-
-
-init()
-if (pdb):
-    print_coordinates()
-
-# Run Simulation for # of timesteps requested.
-for i in range(TIMESTEPS):
-
-    # Calculate net force acting on each body.
-    calculate_forces()
-
-    # Move bodies appropriately based upon the net force acting upon them.
-    move_bodies()
-    
-    # If print debug variable turned on, print to stdout.
+    init()
     if (pdb):
         print_coordinates()
 
-    # If GUI mode enabled write positions to file.
-    if (ENABLE_GUI):
-        export_positions()
+    # Run Simulation for # of timesteps requested.
+    for i in range(TIMESTEPS):
+
+        # Calculate net force acting on each body.
+        calculate_forces()
+
+        # Move bodies appropriately based upon the net force acting upon them.
+        move_bodies()
+
+        # Check for collisions and resolve any that are found.
+        if (collisions_detected()):
+            resolve_collisions()
+
+        # If print debug variable turned on, print to stdout.
+        if (pdb):
+            print_coordinates()
+
+        # If GUI mode enabled write positions to file.
+        if (ENABLE_GUI):
+            export_positions()
+
+    return
+    """ END main() """
 
 
+main()
 
 
 """-----------------------------------------------------------------------------
