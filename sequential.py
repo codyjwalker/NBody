@@ -31,10 +31,10 @@ import math
 
 pdb = 1     # Debug print statements.
 
-NUM_BODIES = 5          # Number of bodies in the simulation.
+NUM_BODIES = 4          # Number of bodies in the simulation.
 TIMESTEPS = 30          # Number of timesteps to be run in simulation.
-BODY_RADIUS = 20        # Radius of each body in the simulation.
-BODY_MASS = 10000000    # Mass of each body in the simulation.
+BODY_RADIUS =  5        # Radius of each body in the simulation.
+BODY_MASS = 100000000   # Mass of each body in the simulation.
 ENABLE_GUI = 0          # If 1, write coords to file for visual simulation.
 
 GRAV_CONST = 6674.08    # G scaled by 1000 to make numbers easier to work with.
@@ -63,7 +63,7 @@ collisions = [] # List of collisions that occurred in current timestep.
  " Returns:     Nothing.
  " --------------------------------------------------------------------------"""
 def print_coordinates():
-    print("POSITIONS:\n")
+    print("\nPOSITIONS:")
     for i in range(NUM_BODIES):
         print("Body", i, "x =", xposition[i], "y =", yposition[i])
     return
@@ -97,6 +97,20 @@ def print_forces():
         print("Body", i, "x =", xposition[i], "y =", yposition[i])
     return
     """ END print_forces() """
+
+
+"""-----------------------------------------------------------------------------
+ " Function:    print_collisions
+ " Description: Prints out the tuples that are currently in the collision list.
+ " Arguments:   None.
+ " Returns:     Nothing.
+ " --------------------------------------------------------------------------"""
+def print_collisions():
+    print("COLLISIONS:")
+    for collision in collisions:
+        print("COLLISION between bodies: ", collision)
+    return
+    """ END print_collisions() """
 
 
 """-----------------------------------------------------------------------------
@@ -168,7 +182,7 @@ def calculate_forces():
             magnitude = SPECIAL_G / (distance * distance)
             # Precompute some shunks to lessen total # of computations.
             xdirection = xposition[j] - xposition[i]
-            ydirection = yposition[j] = yposition[i]
+            ydirection = yposition[j] - yposition[i]
             mag_over_dist = (magnitude / distance)
             x_chunk = (mag_over_dist * xdirection)
             y_chunk = (mag_over_dist * ydirection)
@@ -219,7 +233,7 @@ def move_bodies():
  " Returns:     1 if any collisions have occured, 0 otherwise.
  " --------------------------------------------------------------------------"""
 def collisions_detected():
-    is_collision    # Boolean representing if collision occurred.
+    is_collision = 0    # Boolean representing if collision occurred.
     for i in range(NUM_BODIES - 1):
         for j in range(i + 1, NUM_BODIES):
             # TODO: SPEED UP WITH DISTANCES LIST OR SUM10
@@ -233,7 +247,7 @@ def collisions_detected():
                 if (pdb):
                     print("\nCOLLISION!!!!!!!\n")
                 # Mark that these two objects in particular collided.
-                add_collision(i,j)
+                collisions.append((i,j))
                 is_collision = 1
     return is_collision
     """ END collisions_detected() """
@@ -258,6 +272,74 @@ def collisions_detected():
  " Returns:     Nothing.
  " --------------------------------------------------------------------------"""
 def resolve_collisions():
+    # TODO: IMPLEMENT THIS METHOD
+
+    # Handle ever collision that occurred in current timestep.
+    while (len(collisions) > 0):
+        # First, get the two bodies involved in current collision.
+        curr = collisions.pop()
+        body1 = curr[0]
+        body2 = curr[1]
+        if (pdb):
+            print("body1:", body1, "  ", "body2:", body2)
+
+        # Extract information about velocities and positions of bodies.
+        x1 = xposition[body1]
+        y1 = yposition[body1]
+        x2 = xposition[body2]
+        y2 = yposition[body2]
+        v1x = xvelocity[body1]
+        v1y = yvelocity[body1]
+        v2x = xvelocity[body2]
+        v2y = yvelocity[body2]
+
+        # Precompute simm. chunks used in all equations - reduce computations.
+        denom = ((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1))
+        chunk1 = (v1y * (x2 - x1) * (y2 - y1))
+        chunk2 = (v2y * (x2 - x1) * (y2 - y1))
+        chunk3 = (v1x * (y2 - y1) * (x2 - x1))
+        chunk4 = (v2x * (x2 - x1) * (y2 - y1))
+
+        # Determine final x velocity of first body.
+        v1fx = v2x * (x2 - x1) * (x2 - x1)
+        v1fx = v1fx + chunk2
+        v1fx = v1fx + (v1x * (y2 - y1) * (y2 - y1))
+        v1fx = v1fx - chunk1
+        v1fx = v1fx / denom
+
+        # Determine final y velocity of first body.
+        v1fy = chunk4
+        v1fy = v1fy + (v2y * (y2 - y1) * (y2 - y1))
+        v1fy = v1fy - chunk3
+        v1fy = v1fy + (v1y * (x2 - x1) * (x2 - x1))
+        v1fy = v1fy / denom
+
+        # Determine final x velocity of second body.
+        v2fx = v1x * (x2 - x1) * (x2 - x1)
+        v2fx = v2fx + chunk1
+        v2fx = v2fx + (v2x * (y2 - y1) * (y2 - y1))
+        v2fx = v2fx - chunk2
+        v2fx = v2fx / denom
+
+        # Determine final y velocity of second body.
+        v2fy = chunk3
+        v2fy = v2fy + (v1y * (y2 - y1) * (y2 - y1))
+        v2fy = v2fy - chunk4
+        v2fy = v2fy + (v2y * (x2 - x1) * (x2 - x1))
+        v2fy = v2fy / denom
+
+        # Determine final positions of bodies.
+        xposition[body1] = xposition[body1] + v1fx
+        yposition[body1] = yposition[body1] + v1fy
+        xposition[body2] = xposition[body2] + v2fx
+        yposition[body2] = yposition[body2] + v2fy
+
+        # Copy new velocities into global lists.
+        xvelocity[body1] = v1fx
+        yvelocity[body1] = v1fy
+        xvelocity[body2] = v2fx
+        yvelocity[body2] = v2fy
+
     return
     """ END resolve_collisions() """
 
@@ -271,6 +353,7 @@ def resolve_collisions():
  " Returns:     Nothing.
  " --------------------------------------------------------------------------"""
 def export_positions():
+    # TODO: IMPLEMENT THIS METHOD
     return
     """ END export_positions() """
 
@@ -306,7 +389,11 @@ def main():
 
         # Check for collisions and resolve any that are found.
         if (collisions_detected()):
+            if(pdb):
+                print_collisions()
             resolve_collisions()
+            if(pdb):
+                print_collisions()
 
         # If print debug variable turned on, print to stdout.
         if (pdb):
@@ -320,6 +407,7 @@ def main():
     """ END main() """
 
 
+# The call to main() that gets the whole simulation started.
 main()
 
 

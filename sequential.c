@@ -13,6 +13,8 @@
 
 
 // TODO:    PEEP DISTANCE STRUCTURE!
+// TODO:    change pow(x) to x * x wherever applicable.
+// TODO:    MORE SIMILAR CHUNKS! i.e. (x2 - x1)^2 etc.
 
 
 #include "sequential.h"
@@ -355,6 +357,8 @@ void resolve_collisions(void)
   double chunk3 = 0.0;
   double chunk4 = 0.0;
 
+    // TODO: MORE SIMILAR CHUNKS!!! i.e. (x2 - x1)^2 etc.
+
   // Handle every collision that occured in current timestep.
   while (collisions.size > 0)
   {
@@ -374,38 +378,47 @@ void resolve_collisions(void)
     v2y = velocity[body2]->y;
 
     // Precompute similar "chunks" used in all equations to reduce computations.
-    denom = (pow((x2 - x1), 2) + pow((y2 - y1), 2));
+//    denom = (pow((x2 - x1), 2) + pow((y2 - y1), 2));
+    denom = ((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1));
     chunk1 = (v1y * (x2 - x1) * (y2 - y1));
     chunk2 = (v2y * (x2 - x1) * (y2 - y1));
     chunk3 = (v1x * (y2 - y1) * (x2 - x1));
     chunk4 = (v2x * (x2 - x1) * (y2 - y1));
 
     // Determine final x velocity of first body.
-    v1fx = (v2x * pow((x2 - x1), 2));
+//    v1fx = (v2x * pow((x2 - x1), 2));
+    v1fx = v2x * (x2 - x1) * (x2 - x1);
     v1fx = v1fx + chunk2;
-    v1fx = v1fx + (v1x * pow((y2 - y1), 2));
+//    v1fx = v1fx + (v1x * pow((y2 - y1), 2));
+    v1fx = v1fx + (v1x * (y2 - y1) * (y2 - y1));
     v1fx = v1fx - chunk1;
     v1fx = v1fx / denom;
 
     // Determine final y velocity of first body.
     v1fy = chunk4;
-    v1fy = v1fy + (v2y * pow((y2 - y1), 2));
+//    v1fy = v1fy + (v2y * pow((y2 - y1), 2));
+    v1fy = v1fy + (v2y * (y2 - y1) * (y2 - y1));
     v1fy = v1fy - chunk3;
-    v1fy = v1fy + (v1y * pow((x2 - x1), 2));
+//    v1fy = v1fy + (v1y * pow((x2 - x1), 2));
+    v1fy = v1fy + (v1y * (x2 - x1) * (x2 - x1));
     v1fy = v1fy / denom;
 
     // Determine final x velocity of second body.
-    v2fx = (v1x * pow((x2 - x1), 2));
+//    v2fx = (v1x * pow((x2 - x1), 2));
+    v2fx = v1x * (x2 - x1) * (x2 - x1);
     v2fx = v2fx + chunk1;
-    v2fx = v2fx + (v2x * pow((y2 - y1), 2));
+//    v2fx = v2fx + (v2x * pow((y2 - y1), 2));
+    v2fx = v2fx + (v2x * (y2 - y1) * (y2 - y1));
     v2fx = v2fx - chunk2;
     v2fx = v2fx / denom;
 
     // Determine final y velocity of second body.
     v2fy = chunk3;
-    v2fy = v2fy + (v1y * pow((y2 - y1), 2));
+//    v2fy = v2fy + (v1y * pow((y2 - y1), 2));
+    v2fy = v2fy + (v1y * (y2 - y1) * (y2 - y1));
     v2fy = v2fy - chunk4;
-    v2fy = v2fy + (v2y * pow((x2 - x1), 2));
+//    v2fy = v2fy + (v2y * pow((x2 - x1), 2));
+    v2fy = v2fy + (v2y * (x2 - x1) * (x2 - x1));
     v2fy = v2fy / denom;
 
     // Determine final positions of bodies.
