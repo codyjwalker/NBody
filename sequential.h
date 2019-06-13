@@ -49,22 +49,22 @@ extern void export_positions(void);
 
 struct vector
 {
-  double x;
-  double y;
+    double x;
+    double y;
 };
 
 struct c_node
 {
-  int a;
-  int b;
-  c_node *next;
+    int a;
+    int b;
+    c_node *next;
 };
 
 struct c_queue
 {
-  int size;
-  c_node *head;
-  c_node *tail;
+    int size;
+    c_node *head;
+    c_node *tail;
 };
 
 
@@ -113,32 +113,32 @@ c_queue collisions;       // List of collisions that occurred in curr timestep.
  * -------------------------------------------------------------------------- */
 void add_collision(int a, int b)
 {
-  // No existing collisions.
-  if (collisions.head == NULL)
-  {
-    collisions.head = malloc(sizeof(c_node));
-    collisions.head->a = a;
-    collisions.head->b = b;
-    collisions.head->next = NULL;
-
-    collisions.tail = collisions.head;
-  }
-  // Existing collisions, add to end of queue.
-  else
-  {
-    // Walk down to end of queue for proper insertion.
-    c_node *walker;
-    walker = collisions.head;
-    while (walker->next != NULL)
+    // No existing collisions.
+    if (collisions.head == NULL)
     {
-      walker = walker->next;
+        collisions.head = malloc(sizeof(c_node));
+        collisions.head->a = a;
+        collisions.head->b = b;
+        collisions.head->next = NULL;
+
+        collisions.tail = collisions.head;
     }
-    // Walker now pointing to last item in queueue.
-    // Add new collision to end of queue.
-    walker->next = malloc(sizeof(c_node));
-    walker->next->a = a;
-    walker->next->b = b;
-    walker->next->next = NULL;
+    // Existing collisions, add to end of queue.
+    else
+    {
+        // Walk down to end of queue for proper insertion.
+        c_node *walker;
+        walker = collisions.head;
+        while (walker->next != NULL)
+        {
+            walker = walker->next;
+        }
+        // Walker now pointing to last item in queueue.
+        // Add new collision to end of queue.
+        walker->next = malloc(sizeof(c_node));
+        walker->next->a = a;
+        walker->next->b = b;
+        walker->next->next = NULL;
 
     collisions.tail = walker->next;
   }
