@@ -1,6 +1,6 @@
 """-----------------------------------------------------------------------------
  "
- " File:          Sequential.py
+ " File:          sequential.py
  " Author:        Cody Walker
  " Project:       Parallel Project 1 - n-Bodies and Collisions
  " Description:   A sequential implementation of a simulation of the n-body
@@ -20,6 +20,9 @@
  " --------------------------------------------------------------------------"""
 
 
+import math
+
+
 """--------------------------------------------------------------------------"""
 """------------------------------- Globals ----------------------------------"""
 """--------------------------------------------------------------------------"""
@@ -33,12 +36,17 @@ BODY_RADIUS = 20        # Radius of each body in the simulation.
 BODY_MASS = 10000000    # Mass of each body in the simulation.
 ENABLE_GUI = 0          # If 1, write coords to file for visual simulation.
 
+GRAV_CONST = 6674.08    # G scaled by 1000 to make numbers easier to work with.
+SPECIAL_G = 2 * GRAV_CONST * BODY_MASS  # To lessen number of computations.
+
 xposition = []  # List of x-positions of the bodies.
 yposition = []  # List of y-positions of the bodies.
 xvelocity = []  # List of x-velocities of the bodies.
 yvelocity = []  # List of y-velocities of the bodies.
 xforce = []     # List of net x-forces acting upon each of the bodies.
 yforce = []     # List of net y-forces acting upon each of the bodies.
+
+collisions = [] # List of collisions that occurred in current timestep.
 
 
 """--------------------------------------------------------------------------"""
@@ -57,6 +65,9 @@ yforce = []     # List of net y-forces acting upon each of the bodies.
  " Returns:     Nothing.
  " --------------------------------------------------------------------------"""
 def init():
+
+    # TODO: take command line args?
+
     # Open file in write mode in order to start fresh.
     with open("testie.txt", "w") as file:
         # Write num_bodies, body_radius, & timesteps to file for GUI.
@@ -85,6 +96,43 @@ def init():
 
     return
     """ END init() """
+
+
+"""-----------------------------------------------------------------------------
+ " Function:    calculate_forces
+ " Description: For each body, calculates the net force acting upon it from all
+ "              the other bodies in the simulation in the current timeframe.
+ "              The function does not move any of the bodies, and merely does
+ "              the calculations for all the forces at the current moment in
+ "              time.
+ " Arguments:   None.
+ " Returns:     Nothing.
+ " --------------------------------------------------------------------------"""
+def calculate_forces():
+
+    for i in range(NUM_BODIES - 1):
+        # Start j at i + i since we save the forces to BOTH bodies each iter.
+        for j in range(i + 1, NUM_BODIES):
+            # Calculate distance between current pair of bodies.
+            x_dist_chunk = (xposition[i] - xposition[j]) * (xposition[i] -
+                                                            xposition[j])
+            y_dist_chunk = (yposition[i] - yposition[j]) * (yposition[i] -
+                                                            yposition[j])
+            distance = math.sqrt(x_dist_chunk + y_dist_chunk)
+            # Calculate magnitude of gravitational force between pair of bodies
+            magnitude = SPECIAL_G / (distance * distance)
+            # Precompute some shunks to lessen total # of computations.
+            xdirection = xposition[j] - xposition[i]
+            ydirection = yposition[j] = yposition[i]
+            mag_over_dist = (magnitude / distance)
+            x_chunk = (mag_over_dist * xdirection)
+            y_chunk = (mag_over_dist * ydirection)
+            # Save BOTH forces to cut calculations in half.
+            # TODO: LOOK INTO THIS (FROM TEXTBOOK IN files)
+
+
+    return
+    """ END calculate_forces() """
 
 
 """-----------------------------------------------------------------------------
@@ -142,3 +190,4 @@ print_coordinates()
  " Returns:     retval
  " --------------------------------------------------------------------------"""
 
+""" END sequential.py """

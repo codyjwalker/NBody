@@ -206,11 +206,15 @@ void calculate_forces(void)
 
   for (i = 0; i < num_bodies - 1; i++)
   {
+    // Start j at i + 1 since we save the force to BOTH bodies each iteration.
     for (j = i + 1; j < num_bodies; j++)
     {
       // Calculate distance between current pair of bodies.
-      distance = sqrt(pow((position[i]->x - position[j]->x), 2) +
-          pow((position[i]->y - position[j]->y), 2));
+//      distance = sqrt(pow((position[i]->x - position[j]->x), 2) +
+//          pow((position[i]->y - position[j]->y), 2));
+      distance = sqrt(((position[i]->x - position[j]->x) * (position[i]->x -
+                  position[j]->x)) + ((position[i]->y - position[j]->y) *
+                  (position[i]->y - position[j]->y)));
       // Calculate magnitude of gravitational force between pair of bodies.
       magnitude = special_g / (distance * distance);
       direction.x = position[j]->x - position[i]->x;
@@ -219,6 +223,7 @@ void calculate_forces(void)
       mag_over_dist = (magnitude / distance);
       x_chunk = (mag_over_dist * direction.x);
       y_chunk = (mag_over_dist * direction.y);
+      // Save both forces to cut calculations in half.
       force[i]->x = force[i]->x + x_chunk;
       force[j]->x = force[j]->x - x_chunk;
       force[i]->y = force[i]->y + y_chunk;
