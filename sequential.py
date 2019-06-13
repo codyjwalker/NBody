@@ -272,9 +272,7 @@ def collisions_detected():
  " Returns:     Nothing.
  " --------------------------------------------------------------------------"""
 def resolve_collisions():
-    # TODO: IMPLEMENT THIS METHOD
-
-    # Handle ever collision that occurred in current timestep.
+    # Handle every collision that occurred in current timestep.
     while (len(collisions) > 0):
         # First, get the two bodies involved in current collision.
         curr = collisions.pop()
