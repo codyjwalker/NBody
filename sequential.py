@@ -128,11 +128,54 @@ def calculate_forces():
             x_chunk = (mag_over_dist * xdirection)
             y_chunk = (mag_over_dist * ydirection)
             # Save BOTH forces to cut calculations in half.
-            # TODO: LOOK INTO THIS (FROM TEXTBOOK IN files)
-
-
+            xforce[i] = xforce[i] + x_chunk
+            xforce[j] = xforce[j] - x_chunk
+            yforce[i] = yforce[i] + y_chunk
+            yforce[j] = yforce[j] - y_chunk
     return
     """ END calculate_forces() """
+
+
+"""-----------------------------------------------------------------------------
+ " Function:    move_bodies
+ " Description: For each body, determines first its new velocity as a result of
+ "              the net forct acting upon it, and then its new position as a
+ "              result of its new velocity.
+ " Arguments:   None.
+ " Returns:     Nothing.
+ " --------------------------------------------------------------------------"""
+def move_bodies():
+    for i in range(NUM_BODIES):
+        # Calculate change in velocity resulting from net force on current obj.
+        x_delta_v = xforce[i] / BODY_MASS
+        y_delta_v = yforce[i] / BODY_MASS
+        # Calculate change in position resulting from curr object's velocity.
+        x_delta_p = xvelocity[i] + (x_delta_v * 0.5)
+        y_delta_p = yvelocity[i] + (y_delta_v * 0.5)
+        # Store current object's new velocity.
+        xvelocity[i] = xvelocity[i] + x_delta_v
+        yvelocity[i] = yvelocity[i] + y_delta_v
+        # Store current object's new position.
+        xposition[i] = xposition[i] + x_delta_p
+        yposition[i] = yposition[i] + y_delta_p
+        # Reset force vector to prepare for next time move_bodies called.
+        xforce[i] = 0
+        yforce[i] = 0
+    return
+    """ END move_bodies() """
+
+
+"""-----------------------------------------------------------------------------
+ " Function:    func
+ " Description: desc
+ " Arguments:   None.
+ " Returns:     Nothing.
+ " --------------------------------------------------------------------------"""
+def export_positions():
+    return
+    """ END export_positions() """
+
+
 
 
 """-----------------------------------------------------------------------------
@@ -179,15 +222,36 @@ def print_forces():
     """ END print_forces() """
 
 
+
 init()
-print_coordinates()
+if (pdb):
+    print_coordinates()
+
+# Run Simulation for # of timesteps requested.
+for i in range(TIMESTEPS):
+
+    # Calculate net force acting on each body.
+    calculate_forces()
+
+    # Move bodies appropriately based upon the net force acting upon them.
+    move_bodies()
+    
+    # If print debug variable turned on, print to stdout.
+    if (pdb):
+        print_coordinates()
+
+    # If GUI mode enabled write positions to file.
+    if (ENABLE_GUI):
+        export_positions()
+
+
 
 
 """-----------------------------------------------------------------------------
  " Function:    func
  " Description: desc
- " Arguments:   args
- " Returns:     retval
+ " Arguments:   None.
+ " Returns:     Nothing.
  " --------------------------------------------------------------------------"""
 
 """ END sequential.py """
