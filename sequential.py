@@ -32,10 +32,10 @@ import time
 
 pdb = 1     # Debug print statements.
 
-NUM_BODIES = 4          # Number of bodies in the simulation.
-TIMESTEPS = 3           # Number of timesteps to be run in simulation.
+NUM_BODIES = 5          # Number of bodies in the simulation.
+TIMESTEPS = 300         # Number of timesteps to be run in simulation.
 BODY_RADIUS =  5        # Radius of each body in the simulation.
-BODY_MASS = 100000000   # Mass of each body in the simulation.
+BODY_MASS = 1000000000  # Mass of each body in the simulation.
 ENABLE_GUI = 1          # If 1, write coords to file for visual simulation.
 
 GRAV_CONST = 6674.08    # G scaled by 1000 to make numbers easier to work with.
@@ -71,7 +71,7 @@ def init():
     # TODO: take command line args?
 
     # Open file in write mode in order to start fresh.
-    with open("py_gui_input.txt", "w") as file:
+    with open("gui_input.txt", "w") as file:
         # Write num_bodies, body_radius, & timesteps to file for GUI.
         file.write(str(NUM_BODIES))
         file.write("\n")
@@ -295,7 +295,7 @@ def resolve_collisions():
  " --------------------------------------------------------------------------"""
 def export_positions():
     # Open file in append mode so as to not erase what's already there.
-    with open("py_gui_input.txt", "a") as file:
+    with open("gui_input.txt", "a") as file:
         for i in range(NUM_BODIES):
             file.write(str(xposition[i]))
             file.write("\n")
