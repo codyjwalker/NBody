@@ -24,6 +24,16 @@
 import turtle
 
 
+with open("py_gui_input.txt", "r") as file:
+    NUM_BODIES = file.readline()
+    BODY_RADIUS = file.readline()
+    TIMESTEPS = file.readline()
+    print("NUM_BODIES:", NUM_BODIES, "BODY_RADIUS", BODY_RADIUS, "TIMESTEPS",
+          TIMESTEPS)
+
+file.close()
+
+"""
 win = turtle.Screen()
 win.bgcolor("black")
 win.title("N-Body Gravitational Simulation")
@@ -42,5 +52,6 @@ body.goto(0, 200)
 # To prevent everything from crashing.
 turtle.done()
 
+"""
 
 """ END PythonGraphics.py """
