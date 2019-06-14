@@ -21,6 +21,7 @@
 
             # TODO: SPEED UP WITH DISTANCES LIST OR SUM10
 
+# Test of Gwrite with NERDTree enabled.
 
 import math
 import time
