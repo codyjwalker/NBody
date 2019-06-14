@@ -6,3 +6,7 @@ py_gui_input.txt
 report.pdf
 files
 __pycache__
+parallel
+sequential
+3dparallel
+3dsequential
