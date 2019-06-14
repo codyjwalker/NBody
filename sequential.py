@@ -1,14 +1,14 @@
 """-----------------------------------------------------------------------------
  "
- " File:          sequential.py
- " Author:        Cody Walker
- " Project:       Parallel Project 1 - n-Bodies and Collisions
- " Description:   A sequential implementation of a simulation of the n-body
- "                gravitational problem written in Python in order to run a
- "                time test between implementations written in different
- "                languages.
- " Created:       12 June 2019
- " Updated:       13 June 2019
+ " File:            sequential.py
+ " Author:          Cody Walker
+ " Project:         Parallel Project 1 - n-Bodies and Collisions
+ " Description:     A sequential implementation of a simulation of the n-body
+ "                  gravitational problem written in Python in order to run a
+ "                  time test between implementations written in different
+ "                  languages.
+ " Created:         12 June 2019
+ " Updated:         13 June 2019
  "
  " NOTES:
  "              UNIQUE  |   ORDER   |   CHANGE SPEC EL  |   NEW ELS
@@ -35,10 +35,10 @@ import time
 pdb = 1     # Debug print statements.
 
 NUM_BODIES = 4          # Number of bodies in the simulation.
-TIMESTEPS = 30          # Number of timesteps to be run in simulation.
+TIMESTEPS = 3           # Number of timesteps to be run in simulation.
 BODY_RADIUS =  5        # Radius of each body in the simulation.
 BODY_MASS = 100000000   # Mass of each body in the simulation.
-ENABLE_GUI = 0          # If 1, write coords to file for visual simulation.
+ENABLE_GUI = 1          # If 1, write coords to file for visual simulation.
 
 GRAV_CONST = 6674.08    # G scaled by 1000 to make numbers easier to work with.
 SPECIAL_G = 2 * GRAV_CONST * BODY_MASS  # To lessen number of computations.
@@ -73,7 +73,7 @@ def init():
     # TODO: take command line args?
 
     # Open file in write mode in order to start fresh.
-    with open("testie.txt", "w") as file:
+    with open("py_gui_input.txt", "w") as file:
         # Write num_bodies, body_radius, & timesteps to file for GUI.
         file.write(str(NUM_BODIES))
         file.write(" ")
@@ -296,7 +296,15 @@ def resolve_collisions():
  " Returns:     Nothing.
  " --------------------------------------------------------------------------"""
 def export_positions():
-    # TODO: IMPLEMENT THIS METHOD
+    # Open file in append mode so as to not erase what's already there.
+    with open("py_gui_input.txt", "a") as file:
+        for i in range(NUM_BODIES):
+            file.write(str(xposition[i]))
+            file.write(" ")
+            file.write(str(yposition[i]))
+            file.write(" ")
+
+    file.close()
     return
     """ END export_positions() """
 
@@ -372,9 +380,7 @@ def print_collisions():
  " Returns:     Appropriate exit status of program.
  " --------------------------------------------------------------------------"""
 def main():
-
-    # TODO: Time calculation bs
-
+    # Record time to be used for time measurement.
     start_time = time.perf_counter()
 
     init()
@@ -383,6 +389,10 @@ def main():
 
     # Run Simulation for # of timesteps requested.
     for i in range(TIMESTEPS):
+
+        # If GUI mode enabled write positions to file.
+        if (ENABLE_GUI):
+            export_positions()
 
         # Calculate net force acting on each body.
         calculate_forces()
@@ -402,10 +412,7 @@ def main():
         if (pdb):
             print_coordinates()
 
-        # If GUI mode enabled write positions to file.
-        if (ENABLE_GUI):
-            export_positions()
-
+    # Record time to be used for time measurement & print elapsed time.
     end_time = time.perf_counter()
     print("\n\nTOTAL TIME ELAPSED:   ", end_time - start_time, "\n\n")
 
