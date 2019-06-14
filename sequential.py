@@ -21,8 +21,6 @@
 
             # TODO: SPEED UP WITH DISTANCES LIST OR SUM10
 
-# Test of Gwrite with NERDTree enabled.
-
 import math
 import time
 
@@ -76,11 +74,11 @@ def init():
     with open("py_gui_input.txt", "w") as file:
         # Write num_bodies, body_radius, & timesteps to file for GUI.
         file.write(str(NUM_BODIES))
-        file.write(" ")
+        file.write("\n")
         file.write(str(BODY_RADIUS))
-        file.write(" ")
+        file.write("\n")
         file.write(str(TIMESTEPS))
-        file.write(" ")
+        file.write("\n")
 
     # Close the file.
     file.close()
@@ -300,9 +298,9 @@ def export_positions():
     with open("py_gui_input.txt", "a") as file:
         for i in range(NUM_BODIES):
             file.write(str(xposition[i]))
-            file.write(" ")
+            file.write("\n")
             file.write(str(yposition[i]))
-            file.write(" ")
+            file.write("\n")
 
     file.close()
     return
