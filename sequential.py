@@ -21,8 +21,11 @@
 
             # TODO: SPEED UP WITH DISTANCES LIST OR SUM10
 
+
 import math
 import time
+
+# Test for gcommit
 
 
 """--------------------------------------------------------------------------"""
