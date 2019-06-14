@@ -7,7 +7,7 @@
  * Description:   A sequential implementation of a simulation of the n-body
  *                gravitational problem.
  * Created:       10 October 2018
- * Updated:       7 November 2018
+ * Updated:       13 June 2019
  *
  * -------------------------------------------------------------------------- */
 
