@@ -1,0 +1,8 @@
+*.swp
+Makefile.txt
+charts.ods
+gui_input.txt
+py_gui_input.txt
+report.pdf
+files
+__pycache__
