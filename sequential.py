@@ -22,6 +22,7 @@
             # TODO: SPEED UP WITH DISTANCES LIST OR SUM10
 
 import math
+import time
 
 
 """--------------------------------------------------------------------------"""
@@ -53,64 +54,6 @@ collisions = [] # List of collisions that occurred in current timestep.
 """--------------------------------------------------------------------------"""
 """------------------------------ Functions ---------------------------------"""
 """--------------------------------------------------------------------------"""
-
-
-"""-----------------------------------------------------------------------------
- " Function:    print_coordinates
- " Description: Prints out the position coordinates of every body in the
- "              simulation.
- " Arguments:   None.
- " Returns:     Nothing.
- " --------------------------------------------------------------------------"""
-def print_coordinates():
-    print("\nPOSITIONS:")
-    for i in range(NUM_BODIES):
-        print("Body", i, "x =", xposition[i], "y =", yposition[i])
-    return
-    """ END print_coordinates() """
-
-
-"""-----------------------------------------------------------------------------
- " Function:    print_velocities
- " Description: Prints out the velocities of every body in the simulation.
- " Arguments:   None.
- " Returns:     Nothing.
- " --------------------------------------------------------------------------"""
-def print_velocities():
-    print("VELOCITIES:\n")
-    for i in range(NUM_BODIES):
-        print("Body", i, "vx =", xvelocity[i], "vy =", yvelocity[i])
-    return
-    """ END print_velocities() """
-
-
-"""-----------------------------------------------------------------------------
- " Function:    print_forces
- " Description: Prints out the net forces acting upon every body in the
- "              simulation.
- " Arguments:   None.
- " Returns:     Nothing.
- " --------------------------------------------------------------------------"""
-def print_forces():
-    print("FORCES:\n")
-    for i in range(NUM_BODIES):
-        print("Body", i, "x =", xposition[i], "y =", yposition[i])
-    return
-    """ END print_forces() """
-
-
-"""-----------------------------------------------------------------------------
- " Function:    print_collisions
- " Description: Prints out the tuples that are currently in the collision list.
- " Arguments:   None.
- " Returns:     Nothing.
- " --------------------------------------------------------------------------"""
-def print_collisions():
-    print("COLLISIONS:")
-    for collision in collisions:
-        print("COLLISION between bodies: ", collision)
-    return
-    """ END print_collisions() """
 
 
 """-----------------------------------------------------------------------------
@@ -357,6 +300,64 @@ def export_positions():
 
 
 """-----------------------------------------------------------------------------
+ " Function:    print_coordinates
+ " Description: Prints out the position coordinates of every body in the
+ "              simulation.
+ " Arguments:   None.
+ " Returns:     Nothing.
+ " --------------------------------------------------------------------------"""
+def print_coordinates():
+    print("\nPOSITIONS:")
+    for i in range(NUM_BODIES):
+        print("Body", i, "x =", xposition[i], "y =", yposition[i])
+    return
+    """ END print_coordinates() """
+
+
+"""-----------------------------------------------------------------------------
+ " Function:    print_velocities
+ " Description: Prints out the velocities of every body in the simulation.
+ " Arguments:   None.
+ " Returns:     Nothing.
+ " --------------------------------------------------------------------------"""
+def print_velocities():
+    print("VELOCITIES:\n")
+    for i in range(NUM_BODIES):
+        print("Body", i, "vx =", xvelocity[i], "vy =", yvelocity[i])
+    return
+    """ END print_velocities() """
+
+
+"""-----------------------------------------------------------------------------
+ " Function:    print_forces
+ " Description: Prints out the net forces acting upon every body in the
+ "              simulation.
+ " Arguments:   None.
+ " Returns:     Nothing.
+ " --------------------------------------------------------------------------"""
+def print_forces():
+    print("FORCES:\n")
+    for i in range(NUM_BODIES):
+        print("Body", i, "x =", xposition[i], "y =", yposition[i])
+    return
+    """ END print_forces() """
+
+
+"""-----------------------------------------------------------------------------
+ " Function:    print_collisions
+ " Description: Prints out the tuples that are currently in the collision list.
+ " Arguments:   None.
+ " Returns:     Nothing.
+ " --------------------------------------------------------------------------"""
+def print_collisions():
+    print("COLLISIONS:")
+    for collision in collisions:
+        print("COLLISION between bodies: ", collision)
+    return
+    """ END print_collisions() """
+
+
+"""-----------------------------------------------------------------------------
  " Function:    main
  " Description: Doesn't do much, just calls functions to do all the work
  "              instead.  Records system time before and after doing the work
@@ -371,6 +372,8 @@ def export_positions():
 def main():
 
     # TODO: Time calculation bs
+
+    start_time = time.perf_counter()
 
     init()
     if (pdb):
@@ -400,6 +403,9 @@ def main():
         # If GUI mode enabled write positions to file.
         if (ENABLE_GUI):
             export_positions()
+
+    end_time = time.perf_counter()
+    print("\n\nTOTAL TIME ELAPSED:   ", end_time - start_time, "\n\n")
 
     return
     """ END main() """
