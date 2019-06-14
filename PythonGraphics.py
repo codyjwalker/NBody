@@ -35,7 +35,8 @@ win.bgcolor("black")
 win.title("N-Body Gravitational Simulation")
 
 
-with open("py_gui_input.txt", "r") as file:
+with open("gui_input.txt", "r") as file:
+#with open("py_gui_input.txt", "r") as file:
     # First read in how many bodies, radius of each body, & how many timesteps
     # to run the simulation from the .txt file.
     NUM_BODIES = int(file.readline())
