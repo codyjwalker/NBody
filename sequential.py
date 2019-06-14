@@ -8,7 +8,7 @@
  "                time test between implementations written in different
  "                languages.
  " Created:       12 June 2019
- " Updated:       12 June 2019
+ " Updated:       13 June 2019
  "
  " NOTES:
  "              UNIQUE  |   ORDER   |   CHANGE SPEC EL  |   NEW ELS
