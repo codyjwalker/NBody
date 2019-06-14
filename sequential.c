@@ -19,7 +19,7 @@
 
 #include "sequential.h"
 
-#define NUM_BODIES      50
+#define NUM_BODIES      5
 #define TIMESTEPS       300
 #define ENABLE_GUI      1
 #define BODY_RADIUS     20
@@ -69,15 +69,15 @@ void init(int argc, char *argv[])
   file = fopen("gui_input.txt", "w");
 
   // Write num_bodies, body_radius, & timesteps to file for GUI.
-  if (fprintf(file, "%d ", num_bodies) == EOF)
+  if (fprintf(file, "%d\n", num_bodies) == EOF)
   {
     error("ERROR!!! init(): PROBLEM WITH fprintf()");
   }
-  if (fprintf(file, "%d ", body_radius) == EOF)
+  if (fprintf(file, "%d\n", body_radius) == EOF)
   {
     error("ERROR!!! init(): PROBLEM WITH fprintf()");
   }
-  if (fprintf(file, "%d ", timesteps) == EOF)
+  if (fprintf(file, "%d\n", timesteps) == EOF)
   {
     error("ERROR!!! init(): PROBLEM WITH fprintf()");
   }
@@ -451,11 +451,11 @@ void export_positions(void)
 
   for (i = 0; i < num_bodies; i++)
   {
-    if (fprintf(file, "%lf ", position[i]->x) == EOF)
+    if (fprintf(file, "%lf\n", position[i]->x) == EOF)
     {
       error("ERROR!!! export_positions(): PROBLEM WITH fprintf()");
     }
-    if (fprintf(file, "%lf ", position[i]->y) == EOF)
+    if (fprintf(file, "%lf\n", position[i]->y) == EOF)
     {
       error("ERROR!!! export_positions(): PROBLEM WITH fprintf()");
     }
