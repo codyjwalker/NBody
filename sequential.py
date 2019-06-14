@@ -25,13 +25,6 @@
 import math
 import time
 
-# Test for gcommit
-# BUT THIS IS THE REAL TEST
-# jkjkjkjkj TTTHHHIIIIISSSSSS IS THE REAL FACKIN DEAL RIGHT HERE
-# lol
-# shit
-# THE FUCKIN REAL TEST
-
 
 """--------------------------------------------------------------------------"""
 """------------------------------- Globals ----------------------------------"""
