@@ -24,15 +24,10 @@
 import turtle
 
 
-pdb = 1
+pdb = 0
 
 
 bodies = []
-
-
-win = turtle.Screen()
-win.bgcolor("black")
-win.title("N-Body Gravitational Simulation")
 
 
 with open("gui_input.txt", "r") as file:
@@ -42,6 +37,18 @@ with open("gui_input.txt", "r") as file:
     NUM_BODIES = int(file.readline())
     BODY_RADIUS = int(file.readline())
     TIMESTEPS = int(file.readline())
+    # Read in world coordinates.
+    XMIN = int(file.readline())
+    YMIN = int(file.readline())
+    XMAX = int(file.readline())
+    YMAX = int(file.readline())
+
+    # Setup viewing window.
+    win = turtle.Screen()
+    win.bgcolor("black")
+    win.title("N-Body Gravitational Simulation")
+    turtle.setworldcoordinates(XMIN, YMIN, XMAX, YMAX)
+
 
     if (pdb):
         print("NUM_BODIES:", NUM_BODIES, "BODY_RADIUS", BODY_RADIUS, "TIMESTEPS",
@@ -53,6 +60,7 @@ with open("gui_input.txt", "r") as file:
 
     # Initialize each body.
     for body in bodies:
+        # TODO: figure out how to set radius!!!!!
         body.shape("circle")
         body.color("green")
         # Dont draw path lines.
