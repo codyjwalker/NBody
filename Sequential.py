@@ -119,6 +119,28 @@ def init():
 
 
 """-----------------------------------------------------------------------------
+ " Function:    export_positions
+ " Description: Writes the information contained inside the position array at
+ "              the current timeframe to a .txt file for a GUI to read and
+ "              use to generate a visualization of the simulation.
+ " Arguments:   None.
+ " Returns:     Nothing.
+ " --------------------------------------------------------------------------"""
+def export_positions():
+    # Open file in append mode so as to not erase what's already there.
+    with open("gui_input.txt", "a") as file:
+        for i in range(NUM_BODIES):
+            file.write(str(xposition[i]))
+            file.write("\n")
+            file.write(str(yposition[i]))
+            file.write("\n")
+
+    file.close()
+    return
+    """ END export_positions() """
+
+
+"""-----------------------------------------------------------------------------
  " Function:    calculate_forces
  " Description: For each body, calculates the net force acting upon it from all
  "              the other bodies in the simulation in the current timeframe.
@@ -304,25 +326,31 @@ def resolve_collisions():
 
 
 """-----------------------------------------------------------------------------
- " Function:    export_positions
- " Description: Writes the information contained inside the position array at
- "              the current timeframe to a .txt file for a GUI to read and
- "              use to generate a visualization of the simulation.
+ " Function:    handle_wall_collisions
+ " Description: Checks the current state of the simulation, and determines
+ "              whether or not the previous movement calculation has caused any
+ "              bodies to run into a wall.  If any found, changes body's x & y
+ "              velocities to simulate it bouncing off a perfectly flat wall.
+ "              Does so by first determining which wall (left/right or
+ "              top/bottom) the object is colliding with, then based on that
+ "              leaving either the x or y velocity the same, and negating the
+ "              other appropriately with the wall it is colliding with.
  " Arguments:   None.
  " Returns:     Nothing.
  " --------------------------------------------------------------------------"""
-def export_positions():
-    # Open file in append mode so as to not erase what's already there.
-    with open("gui_input.txt", "a") as file:
-        for i in range(NUM_BODIES):
-            file.write(str(xposition[i]))
-            file.write("\n")
-            file.write(str(yposition[i]))
-            file.write("\n")
+def handle_wall_collisions():
+    for i in range(NUM_BODIES - 1):
+        # Check left and right walls.
+        if ((xposition[i] < XMIN) or (xposition[i] > XMAX)):
+            # Negate x velocity.
+            xvelocity[i] = (-1 * xvelocity[i])
+        # Check top and bottom walls.
+        if ((yposition[i] < YMIN) or (yposition[i] > YMAX)):
+            # Negate y velocity.
+            yvelocity[i] = (-1 * yvelocity[i])
 
-    file.close()
     return
-    """ END export_positions() """
+    """ END handle_wall_collisions() """
 
 
 """-----------------------------------------------------------------------------
@@ -416,6 +444,9 @@ def main():
         # Move bodies appropriately based upon the net force acting upon them.
         move_bodies()
 
+        # Check for wall collisions and resolve any that are found.
+        handle_wall_collisions()
+
         # Check for collisions and resolve any that are found.
         if (collisions_detected()):
             if(pdb):
@@ -438,7 +469,6 @@ def main():
 
 # The call to main() that gets the whole simulation started.
 main()
-
 
 """-----------------------------------------------------------------------------
  " Function:    func
