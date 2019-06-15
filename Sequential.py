@@ -1,6 +1,6 @@
 """-----------------------------------------------------------------------------
  "
- " File:            sequential.py
+ " File:            Sequential.py
  " Author:          Cody Walker
  " Project:         Parallel Project 1 - n-Bodies and Collisions
  " Description:     A sequential implementation of a simulation of the n-body
@@ -33,13 +33,13 @@ import random
 """--------------------------------------------------------------------------"""
 
 
-pdb = 1     # Debug print statements.
+pdb = 0     # Debug print statements.
 
-NUM_BODIES = 8          # Number of bodies in the simulation.
-TIMESTEPS = 300         # Number of timesteps to be run in simulation.
+NUM_BODIES = 180          # Number of bodies in the simulation.
+TIMESTEPS = 3000         # Number of timesteps to be run in simulation.
 BODY_RADIUS = 20        # Radius of each body in the simulation.
 BODY_MASS = 1000000000  # Mass of each body in the simulation.
-ENABLE_GUI = 1          # If 1, write coords to file for visual simulation.
+ENABLE_GUI = 0          # If 1, write coords to file for visual simulation.
 
 # Values to set the coordinates of the viewing pane for the graphic visual.
 XMIN = 0
@@ -477,4 +477,4 @@ main()
  " Returns:     Nothing.
  " --------------------------------------------------------------------------"""
 
-""" END sequential.py """
+""" END Sequential.py """

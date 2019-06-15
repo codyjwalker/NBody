@@ -19,13 +19,13 @@
 
 #include "sequential.h"
 
-#define NUM_BODIES      5
-#define TIMESTEPS       300
-#define ENABLE_GUI      1
+#define NUM_BODIES      180
+#define TIMESTEPS       3000
+#define ENABLE_GUI      0
 #define BODY_RADIUS     20
 #define BODY_MASS       1000000000
 
-int pdb = 1;
+int pdb = 0;
 
 
 /* -------------------------------------------------------------------------- */
