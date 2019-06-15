@@ -25,6 +25,7 @@
 
 import math
 import time
+import random
 
 
 """--------------------------------------------------------------------------"""
@@ -34,11 +35,17 @@ import time
 
 pdb = 1     # Debug print statements.
 
-NUM_BODIES = 5          # Number of bodies in the simulation.
+NUM_BODIES = 8          # Number of bodies in the simulation.
 TIMESTEPS = 300         # Number of timesteps to be run in simulation.
-BODY_RADIUS =  5        # Radius of each body in the simulation.
+BODY_RADIUS = 20        # Radius of each body in the simulation.
 BODY_MASS = 1000000000  # Mass of each body in the simulation.
 ENABLE_GUI = 1          # If 1, write coords to file for visual simulation.
+
+# Values to set the coordinates of the viewing pane for the graphic visual.
+XMIN = 0
+YMIN = 0
+XMAX = 900
+YMAX = 1600
 
 GRAV_CONST = 6674.08    # G scaled by 1000 to make numbers easier to work with.
 SPECIAL_G = 2 * GRAV_CONST * BODY_MASS  # To lessen number of computations.
@@ -69,9 +76,6 @@ collisions = [] # List of collisions that occurred in current timestep.
  " Returns:     Nothing.
  " --------------------------------------------------------------------------"""
 def init():
-
-    # TODO: take command line args?
-
     # Open file in write mode in order to start fresh.
     with open("gui_input.txt", "w") as file:
         # Write num_bodies, body_radius, & timesteps to file for GUI.
@@ -81,6 +85,15 @@ def init():
         file.write("\n")
         file.write(str(TIMESTEPS))
         file.write("\n")
+        # Write the four position values for setting window boundaries.
+        file.write(str(XMIN))
+        file.write("\n")
+        file.write(str(YMIN))
+        file.write("\n")
+        file.write(str(XMAX))
+        file.write("\n")
+        file.write(str(YMAX))
+        file.write("\n")
 
     # Close the file.
     file.close()
@@ -88,8 +101,11 @@ def init():
     # Initialize x & y positions.
     # TODO: ACTUALLY MAKE DIS RANDOM LATER
     for i in range(NUM_BODIES):
-        xposition.append(i * 100)
-        yposition.append(i * 100)
+        randx = random.uniform((i * 100), ((1 + i) * 100))
+        randy = random.uniform((i * 100), ((1 + i) * 100))
+
+        xposition.append(randx)
+        yposition.append(randy)
 
     # Initialize x & y velocities & forces as 0.
     for _ in range(NUM_BODIES):
