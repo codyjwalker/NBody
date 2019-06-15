@@ -19,7 +19,9 @@
  "
  " --------------------------------------------------------------------------"""
 
-            # TODO: SPEED UP WITH DISTANCES LIST OR SUM10
+# TODO: SPEED UP WITH DISTANCES LIST OR SUM10
+# TODO: RANDOMIZE STARTING POSITIONS!
+# TODO: FIGURE OUT HOW TO BOUNCE OFF WALLS!
 
 import math
 import time

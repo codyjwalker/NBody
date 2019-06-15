@@ -77,8 +77,4 @@ with open("gui_input.txt", "r") as file:
 file.close()
 
 
-
-
-
-
 """ END PythonGraphics.py """
