@@ -12,33 +12,84 @@
  "
  " --------------------------------------------------------------------------"""
 
+# TODO
+"""
+TO BE USED FOR CALLING BASH SCRIPT TO RUN PROGRAM:
+    import subprocess
+    subprocess.call(['./test.sh'])
+WHERE test.sh IS A SIMPLE SHELL SCRIPT
+"""
+
 
 from tkinter import *
 
+
+
+def run_simulation():
+    global num_bodies_sb
+    global num_timesteps_sb
+    global var_debug_cb
+    global var_graphics_cb
+
+
+    with open("testie.txt", "w") as file:
+        # Write the values to file.
+        file.write(str(num_bodies_sb.get()))
+        file.write("\n")
+        file.write(str(num_timesteps_sb.get()))
+        file.write("\n")
+        file.write(str(var_debug_cb.get()))
+        file.write("\n")
+        file.write(str(var_graphics_cb.get()))
+        file.write("\n")
+
+    # Dont forget to bring a towel!
+    file.close()
+
+    print(num_bodies_sb.get())
+    print(num_timesteps_sb.get())
+    print(var_debug_cb.get())
+    print(var_graphics_cb.get())
+    return
+
+
+
 root = Tk()
 root.title('N-Body Gravitational Simulation')
-root.geometry("300x400")
+# root.geometry("300x400")
 
 
-label1 = Label(root, text = "Number of bodies:    ")
-label2 = Label(root, text = "Number of timesteps:    ")
+num_bodies_label = Label(root, text = "Number of bodies:    ")
+num_timesteps_label = Label(root, text = "Number of timesteps:    ")
 
-sb1 = Spinbox(root, width = 5, from_ = 1, to = 10)
-sb2 = Spinbox(root, width = 5, from_ = 1, to = 3000)
+num_bodies_sb = Spinbox(root, width = 5, from_ = 1, to = 10)
+num_timesteps_sb = Spinbox(root, width = 5, from_ = 1, to = 3000)
 
-cb1 = Checkbutton(root, text = "Enable Debug Print Statements")
-cb2 = Checkbutton(root, text = "Enable Graphical Output")
+var_debug_cb = IntVar()
+var_graphics_cb = IntVar()
+debug_cb = Checkbutton(root, text = "Enable Debug Print Statements", variable =
+                       var_debug_cb)
+graphics_cb = Checkbutton(root, text = "Enable Graphical Output", variable =
+                          var_graphics_cb)
+
+
+run_button = Button(root, text = "Run Simulation", width = 10, command =
+                    run_simulation)
 
 
 
-label1.grid(row = 0, column = 0, sticky = E)
-label2.grid(row = 1, column = 0, sticky = E)
+num_bodies_label.grid(row = 0, column = 0, sticky = E)
+num_timesteps_label.grid(row = 1, column = 0, sticky = E)
 
-sb1.grid(row = 0, column = 2, sticky = W)
-sb2.grid(row = 1, column = 2, sticky = W)
+num_bodies_sb.grid(row = 0, column = 1, sticky = W)
+num_timesteps_sb.grid(row = 1, column = 1, sticky = W)
 
-cb1.grid(columnspan = 2, sticky = W)
-cb2.grid(columnspan = 2, sticky = W)
+debug_cb.grid(columnspan = 2, sticky = W)
+graphics_cb.grid(columnspan = 2, sticky = W)
+
+run_button.grid(columnspan = 2)
+
+
 
 
 """
