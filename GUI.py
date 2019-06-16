@@ -53,6 +53,14 @@ def run_simulation():
         file.write("\n")
         file.write(str(body_mass_sb.get()))
         file.write("\n")
+        file.write(str(xmin_sb.get()))
+        file.write("\n")
+        file.write(str(ymin_sb.get()))
+        file.write("\n")
+        file.write(str(xmax_sb.get()))
+        file.write("\n")
+        file.write(str(ymax_sb.get()))
+        file.write("\n")
         file.write(str(var_debug_cb.get()))
         file.write("\n")
         file.write(str(var_graphics_cb.get()))
@@ -71,10 +79,30 @@ def run_simulation():
     return
 
 
-
+# Initialize the Tkinter
 root = Tk()
 root.title('N-Body Gravitational Simulation')
 # root.geometry("300x400")
+
+# Default values for spinboxes.
+default_num_bodies = StringVar(root)
+default_num_timesteps = StringVar(root)
+default_body_radius = StringVar(root)
+default_body_mass = StringVar(root)
+default_xmin = StringVar(root)
+default_ymin = StringVar(root)
+default_xmax = StringVar(root)
+default_ymax = StringVar(root)
+
+default_num_bodies.set("4")
+default_num_timesteps.set("300")
+default_body_radius.set("5")
+default_body_mass.set("1000000000")
+default_xmin.set("0")
+default_ymin.set("0")
+default_xmax.set("1600")
+default_ymax.set("900")
+
 
 
 # Labels for each of the Spinboxes.
@@ -82,12 +110,28 @@ num_bodies_label = Label(root, text = "Number of bodies:    ")
 num_timesteps_label = Label(root, text = "Number of timesteps:    ")
 body_radius_label = Label(root, text = "Radius of each body:    ")
 body_mass_label = Label(root, text = "Mass of each body:    ")
+xmin_label = Label(root, text = "Min x value:    ")
+ymin_label = Label(root, text = "Min y value:    ")
+xmax_label = Label(root, text = "Max x value:    ")
+ymax_label = Label(root, text = "Max y value:    ")
 
 # The Spinboxes for selecting values for the simulation.
-num_bodies_sb = Spinbox(root, width = 12, from_ = 1, to = 10)
-num_timesteps_sb = Spinbox(root, width = 12, from_ = 1, to = 3000)
-body_radius_sb = Spinbox(root, width = 12, from_ = 1, to = 50)
-body_mass_sb = Spinbox(root, width = 12, from_ = 100000, to = 10000000000)
+num_bodies_sb = Spinbox(root, width = 12, from_ = 1, to = 10, textvariable =
+                        default_num_bodies)
+num_timesteps_sb = Spinbox(root, width = 12, from_ = 1, to = 3000, textvariable
+                          = default_num_timesteps)
+body_radius_sb = Spinbox(root, width = 12, from_ = 1, to = 50, textvariable =
+                         default_body_radius)
+body_mass_sb = Spinbox(root, width = 12, from_ = 100000, to = 10000000000,
+                       textvariable = default_body_mass)
+xmin_sb = Spinbox(root, width = 12, from_ = -3200, to = 3200, textvariable =
+                  default_xmin)
+ymin_sb = Spinbox(root, width = 12, from_ = -1800, to = 1800, textvariable =
+                  default_ymin)
+xmax_sb = Spinbox(root, width = 12, from_ = -3200, to = 3200, textvariable =
+                  default_xmax)
+ymax_sb = Spinbox(root, width = 12, from_ = -1800, to = 1800, textvariable =
+                  default_ymax)
 
 # Checkboxes & their respective variables.
 var_debug_cb = IntVar()
@@ -107,11 +151,19 @@ num_bodies_label.grid(row = 0, column = 0, sticky = E)
 num_timesteps_label.grid(row = 1, column = 0, sticky = E)
 body_radius_label.grid(row = 2, column = 0, sticky = E)
 body_mass_label.grid(row = 3, column = 0, sticky = E)
+xmin_label.grid(row = 4, column = 0, sticky = E)
+ymin_label.grid(row = 5, column = 0, sticky = E)
+xmax_label.grid(row = 6, column = 0, sticky = E)
+ymax_label.grid(row = 7, column = 0, sticky = E)
 
 num_bodies_sb.grid(row = 0, column = 1, sticky = W)
 num_timesteps_sb.grid(row = 1, column = 1, sticky = W)
 body_radius_sb.grid(row = 2, column = 1, sticky = W)
 body_mass_sb.grid(row = 3, column = 1, sticky = W)
+xmin_sb.grid(row = 4, column = 1, sticky = W)
+ymin_sb.grid(row = 5, column = 1, sticky = W)
+xmax_sb.grid(row = 6, column = 1, sticky = W)
+ymax_sb.grid(row = 7, column = 1, sticky = W)
 
 debug_cb.grid(columnspan = 2, sticky = W)
 graphics_cb.grid(columnspan = 2, sticky = W)
