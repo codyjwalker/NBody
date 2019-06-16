@@ -39,6 +39,7 @@ BODY_RADIUS = 20        # Radius of each body in the simulation.
 BODY_MASS = 1000000000  # Mass of each body in the simulation.
 ENABLE_GUI = 0          # If 1, write coords to file for visual simulation.
 
+# TODO: FIGURE OUT IF YOU FUCKED UP AND SWAPPED X AND Y COORDINATES
 # Values to set the coordinates of the viewing pane for the graphic visual.
 XMIN = 0
 YMIN = 0
