@@ -8,7 +8,7 @@
  "                  time test between implementations written in different
  "                  languages.
  " Created:         12 June 2019
- " Updated:         13 June 2019
+ " Updated:         17 June 2019
  "
  " NOTES:
  "              UNIQUE  |   ORDER   |   CHANGE SPEC EL  |   NEW ELS
@@ -33,8 +33,8 @@ import random
 
 pdb = 0     # Debug print statements.
 
-NUM_BODIES = 180          # Number of bodies in the simulation.
-TIMESTEPS = 6000         # Number of timesteps to be run in simulation.
+NUM_BODIES = 180        # Number of bodies in the simulation.
+TIMESTEPS = 60          # Number of timesteps to be run in simulation.
 BODY_RADIUS = 20        # Radius of each body in the simulation.
 BODY_MASS = 1000000000  # Mass of each body in the simulation.
 ENABLE_GUI = 0          # If 1, write coords to file for visual simulation.
@@ -68,16 +68,36 @@ collisions = [] # List of collisions that occurred in current timestep.
  " Function:    init
  " Description: Initializes global variables, setting them to be any user-
  "              supplied values if appropriate.
- " Arguments:   argv1 - number of bodies
- "              argv2 - radius of each body
- "              argv3 - number of time steps
- "              argv4 - 1 to enable output for gui, 0 otherwise
+ " Arguments:   None.
  " Returns:     Nothing.
  " --------------------------------------------------------------------------"""
 def init():
+    # Declare the global variables as globals.
+    global NUM_BODIES
+    global TIMESTEPS
+    global BODY_RADIUS
+    global BODY_MASS
+    global XMIN
+    global YMIN
+    global XMAX
+    global YMAX
+    global pdb
+    global ENABLE_GUI
+
     # Read values from file to use as parameters for simulation.
-    #with open("testie.txt", "r") as file:
-        # TODO: figure out how to change global immutable objects.
+    with open("testie.txt", "r") as file:
+        NUM_BODIES = int(file.readline())
+        TIMESTEPS = int(file.readline())
+        BODY_RADIUS = int(file.readline())
+        BODY_MASS = int(file.readline())
+        XMIN = int(file.readline())
+        YMIN = int(file.readline())
+        XMAX = int(file.readline())
+        YMAX = int(file.readline())
+        pdb = int(file.readline())
+        ENABLE_GUI = int(file.readline())
+    file.close()
+
 
     # Open file in write mode in order to start fresh.
     with open("gui_input.txt", "w") as file:
