@@ -20,7 +20,7 @@
 #include "sequential.h"
 
 #define NUM_BODIES      180
-#define TIMESTEPS       3000
+#define TIMESTEPS       6000
 #define ENABLE_GUI      0
 #define BODY_RADIUS     20
 #define BODY_MASS       1000000000

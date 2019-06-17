@@ -71,6 +71,10 @@ def run_simulation():
         print(num_timesteps_sb.get())
         print(body_radius_sb.get())
         print(body_mass_sb.get())
+        print(xmin_sb.get())
+        print(ymin_sb.get())
+        print(xmax_sb.get())
+        print(ymax_sb.get())
         print(var_debug_cb.get())
         print(var_graphics_cb.get())
 
@@ -102,8 +106,6 @@ default_xmin.set("0")
 default_ymin.set("0")
 default_xmax.set("1600")
 default_ymax.set("900")
-
-
 
 # Labels for each of the Spinboxes.
 num_bodies_label = Label(root, text = "Number of bodies:    ")
@@ -147,6 +149,7 @@ run_button = Button(root, text = "Run Simulation", width = 10, command =
                     run_simulation)
 
 # Grid layout of all items.
+# First all the labels to the left of the Spinboxes.
 num_bodies_label.grid(row = 0, column = 0, sticky = E)
 num_timesteps_label.grid(row = 1, column = 0, sticky = E)
 body_radius_label.grid(row = 2, column = 0, sticky = E)
@@ -155,7 +158,7 @@ xmin_label.grid(row = 4, column = 0, sticky = E)
 ymin_label.grid(row = 5, column = 0, sticky = E)
 xmax_label.grid(row = 6, column = 0, sticky = E)
 ymax_label.grid(row = 7, column = 0, sticky = E)
-
+# Then the Spinboxes themselves.
 num_bodies_sb.grid(row = 0, column = 1, sticky = W)
 num_timesteps_sb.grid(row = 1, column = 1, sticky = W)
 body_radius_sb.grid(row = 2, column = 1, sticky = W)
@@ -164,10 +167,10 @@ xmin_sb.grid(row = 4, column = 1, sticky = W)
 ymin_sb.grid(row = 5, column = 1, sticky = W)
 xmax_sb.grid(row = 6, column = 1, sticky = W)
 ymax_sb.grid(row = 7, column = 1, sticky = W)
-
+# The Checkboxes.
 debug_cb.grid(columnspan = 2, sticky = W)
 graphics_cb.grid(columnspan = 2, sticky = W)
-
+# The 'Run Simulation' button.
 run_button.grid(columnspan = 2)
 
 
