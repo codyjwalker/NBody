@@ -53,9 +53,9 @@ def run_simulation():
         file.write("\n")
         file.write(str(ymax_sb.get()))
         file.write("\n")
-        file.write(str(var_debug_cb.get()))
+        file.write(str(var_debug.get()))
         file.write("\n")
-        file.write(str(var_graphics_cb.get()))
+        file.write(str(var_graphics.get()))
         file.write("\n")
 
     if (pdb):
@@ -67,8 +67,8 @@ def run_simulation():
         print(ymin_sb.get())
         print(xmax_sb.get())
         print(ymax_sb.get())
-        print(var_debug_cb.get())
-        print(var_graphics_cb.get())
+        print(var_debug.get())
+        print(var_graphics.get())
 
     # Dont forget to bring a towel!
     file.close()
@@ -87,23 +87,28 @@ root.title('N-Body Gravitational Simulation')
 # root.geometry("300x400")
 
 # Default values for spinboxes.
-default_num_bodies = StringVar(root)
-default_num_timesteps = StringVar(root)
-default_body_radius = StringVar(root)
-default_body_mass = StringVar(root)
-default_xmin = StringVar(root)
-default_ymin = StringVar(root)
-default_xmax = StringVar(root)
-default_ymax = StringVar(root)
+var_num_bodies = StringVar(root)
+var_num_timesteps = StringVar(root)
+var_body_radius = StringVar(root)
+var_body_mass = StringVar(root)
+var_xmin = StringVar(root)
+var_ymin = StringVar(root)
+var_xmax = StringVar(root)
+var_ymax = StringVar(root)
+var_debug = IntVar()
+var_graphics = IntVar()
 
-default_num_bodies.set("4")
-default_num_timesteps.set("300")
-default_body_radius.set("5")
-default_body_mass.set("10000000000")
-default_xmin.set("0")
-default_ymin.set("0")
-default_xmax.set("1600")
-default_ymax.set("900")
+
+var_num_bodies.set("4")
+var_num_timesteps.set("300")
+var_body_radius.set("5")
+var_body_mass.set("10000000000")
+var_xmin.set("0")
+var_ymin.set("0")
+var_xmax.set("1600")
+var_ymax.set("900")
+var_debug.set(1)
+var_graphics.set(1)
 
 # Labels for each of the Spinboxes.
 num_bodies_label = Label(root, text = "Number of bodies:    ")
@@ -117,29 +122,27 @@ ymax_label = Label(root, text = "Max y value:    ")
 
 # The Spinboxes for selecting values for the simulation.
 num_bodies_sb = Spinbox(root, width = 12, from_ = 1, to = 10, textvariable =
-                        default_num_bodies)
+                        var_num_bodies)
 num_timesteps_sb = Spinbox(root, width = 12, from_ = 1, to = 3000, textvariable
-                          = default_num_timesteps)
+                          = var_num_timesteps)
 body_radius_sb = Spinbox(root, width = 12, from_ = 1, to = 50, textvariable =
-                         default_body_radius)
+                         var_body_radius)
 body_mass_sb = Spinbox(root, width = 12, from_ = 100000, to = 100000000000,
-                       textvariable = default_body_mass)
+                       textvariable = var_body_mass)
 xmin_sb = Spinbox(root, width = 12, from_ = -3200, to = 3200, textvariable =
-                  default_xmin)
+                  var_xmin)
 ymin_sb = Spinbox(root, width = 12, from_ = -1800, to = 1800, textvariable =
-                  default_ymin)
+                  var_ymin)
 xmax_sb = Spinbox(root, width = 12, from_ = -3200, to = 3200, textvariable =
-                  default_xmax)
+                  var_xmax)
 ymax_sb = Spinbox(root, width = 12, from_ = -1800, to = 1800, textvariable =
-                  default_ymax)
+                  var_ymax)
 
 # Checkboxes & their respective variables.
-var_debug_cb = IntVar()
-var_graphics_cb = IntVar()
 debug_cb = Checkbutton(root, text = "Enable Debug Print Statements", variable =
-                       var_debug_cb)
+                       var_debug)
 graphics_cb = Checkbutton(root, text = "Enable Graphical Output", variable =
-                          var_graphics_cb)
+                          var_graphics)
 
 
 # The button the user presses to start the simulation.
