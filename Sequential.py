@@ -43,8 +43,8 @@ ENABLE_GUI = 0          # If 1, write coords to file for visual simulation.
 # Values to set the coordinates of the viewing pane for the graphic visual.
 XMIN = 0
 YMIN = 0
-XMAX = 900
-YMAX = 1600
+XMAX = 1600
+YMAX = 900
 
 GRAV_CONST = 6674.08    # G scaled by 1000 to make numbers easier to work with.
 SPECIAL_G = 2 * GRAV_CONST * BODY_MASS  # To lessen number of computations.
@@ -363,13 +363,19 @@ def resolve_collisions():
  " Returns:     Nothing.
  " --------------------------------------------------------------------------"""
 def handle_wall_collisions():
-    for i in range(NUM_BODIES - 1):
+    for i in range(NUM_BODIES):
         # Check left and right walls.
         if ((xposition[i] < XMIN) or (xposition[i] > XMAX)):
             # Negate x velocity.
+            if (pdb):
+                print("\nWALL COLLISION!")
+                print("NEGATING X VELOCITY:")
             xvelocity[i] = (-1 * xvelocity[i])
         # Check top and bottom walls.
-        if ((yposition[i] < YMIN) or (yposition[i] > YMAX)):
+        elif ((yposition[i] < YMIN) or (yposition[i] > YMAX)):
+            if (pdb):
+                print("\nWALL COLLISION!")
+                print("NEGATING Y VELOCITY:")
             # Negate y velocity.
             yvelocity[i] = (-1 * yvelocity[i])
 
