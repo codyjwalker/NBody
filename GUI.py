@@ -99,7 +99,7 @@ default_ymax = StringVar(root)
 default_num_bodies.set("4")
 default_num_timesteps.set("300")
 default_body_radius.set("5")
-default_body_mass.set("1000000000")
+default_body_mass.set("10000000000")
 default_xmin.set("0")
 default_ymin.set("0")
 default_xmax.set("1600")
@@ -122,7 +122,7 @@ num_timesteps_sb = Spinbox(root, width = 12, from_ = 1, to = 3000, textvariable
                           = default_num_timesteps)
 body_radius_sb = Spinbox(root, width = 12, from_ = 1, to = 50, textvariable =
                          default_body_radius)
-body_mass_sb = Spinbox(root, width = 12, from_ = 100000, to = 10000000000,
+body_mass_sb = Spinbox(root, width = 12, from_ = 100000, to = 100000000000,
                        textvariable = default_body_mass)
 xmin_sb = Spinbox(root, width = 12, from_ = -3200, to = 3200, textvariable =
                   default_xmin)
