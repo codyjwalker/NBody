@@ -1,3 +1,4 @@
+#!/bin/sh
 echo "Building the C versions now:"
 make clean
 make
