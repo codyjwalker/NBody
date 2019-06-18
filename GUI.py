@@ -8,7 +8,7 @@
  "                  into a dialogue menu to be used for the simulation.
  "                  languages.
  " Created:         15 June 2019
- " Updated:         15 June 2019
+ " Updated:         17 June 2019
  "
  " --------------------------------------------------------------------------"""
 
@@ -25,6 +25,7 @@ pdb = 1
 
 
 from tkinter import *
+import subprocess
 
 
 """-----------------------------------------------------------------------------
@@ -80,6 +81,12 @@ def run_simulation():
 
     # Dont forget to bring a towel!
     file.close()
+
+    # Close out of the GUI input window.
+    root.destroy()
+
+    # Run the bash script that launches the computational program.
+    subprocess.call(['./PythonVersion.sh'])
     return
 
 
