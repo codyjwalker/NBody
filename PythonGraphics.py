@@ -4,12 +4,12 @@
  " Author:          Cody Walker
  " Project:         Parallel Project 1 - n-Bodies and Collisions
  " Description:     Python script to animate the bodies in the N-Body
- "                  Gravitational Simulation.  Reads from py_gui_input.txt to
+ "                  Gravitational Simulation.  Reads from graphics_input.txt to
  "                  get the positions of all bodies in each timeframe, and
  "                  draws each time frame one after the other until no more
  "                  remain.
  " Created:         13 June 2019
- " Updated:         13 June 2019
+ " Updated:         17 June 2019
  "
  " NOTES:
  "              UNIQUE  |   ORDER   |   CHANGE SPEC EL  |   NEW ELS
@@ -30,13 +30,13 @@ pdb = 0
 bodies = []
 
 
-with open("gui_input.txt", "r") as file:
-#with open("py_gui_input.txt", "r") as file:
+with open("graphics_input.txt", "r") as file:
     # First read in how many bodies, radius of each body, & how many timesteps
     # to run the simulation from the .txt file.
     NUM_BODIES = int(file.readline())
     BODY_RADIUS = int(file.readline())
     TIMESTEPS = int(file.readline())
+
     # Read in world coordinates.
     XMIN = int(file.readline())
     YMIN = int(file.readline())

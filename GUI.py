@@ -12,15 +12,6 @@
  "
  " --------------------------------------------------------------------------"""
 
-# TODO
-"""
-TO BE USED FOR CALLING BASH SCRIPT TO RUN PROGRAM:
-    import subprocess
-    subprocess.call(['./test.sh'])
-WHERE test.sh IS A SIMPLE SHELL SCRIPT
-"""
-
-
 pdb = 1
 
 
@@ -44,7 +35,7 @@ def run_simulation():
     global var_graphics_cb
 
 
-    with open("testie.txt", "w") as file:
+    with open("parameters.txt", "w") as file:
         # Write the values to file.
         file.write(str(num_bodies_sb.get()))
         file.write("\n")
