@@ -43,43 +43,48 @@ with open("graphics_input.txt", "r") as file:
     XMAX = int(file.readline())
     YMAX = int(file.readline())
 
-    # Setup viewing window.
-    win = turtle.Screen()
-    win.bgcolor("black")
-    win.title("N-Body Gravitational Simulation")
-    turtle.setworldcoordinates(XMIN, YMIN, XMAX, YMAX)
+    # Read in ENABLE_GUI boolean.
+    ENABLE_GUI = int(file.readline())
+
+    if (ENABLE_GUI):
+        # Setup viewing window.
+        win = turtle.Screen()
+        win.bgcolor("black")
+        win.title("N-Body Gravitational Simulation")
+        turtle.setworldcoordinates(XMIN, YMIN, XMAX, YMAX)
 
 
-    if (pdb):
-        print("NUM_BODIES:", NUM_BODIES, "BODY_RADIUS", BODY_RADIUS, "TIMESTEPS",
-              TIMESTEPS)
+        if (pdb):
+            print("NUM_BODIES:", NUM_BODIES, "BODY_RADIUS", BODY_RADIUS,
+                  "TIMESTEPS", TIMESTEPS)
 
-    # Add a NUM_BODIES bodies to the bodies list (yes, I know...)
-    for _ in range(NUM_BODIES):
-        bodies.append(turtle.Turtle())
+        # Add a NUM_BODIES bodies to the bodies list (yes, I know...)
+        for _ in range(NUM_BODIES):
+            bodies.append(turtle.Turtle())
 
-    # Initialize each body.
-    for body in bodies:
-        # TODO: figure out how to set radius!!!!!
-        body.shape("circle")
-        body.color("green")
-        # Dont draw path lines.
-        body.penup()
-        # We will move the bodies ourselves, don't let python animate for us.
-        body.speed(0)
-
-
-    # Keep going until all timesteps have been animated.
-    for _ in range(TIMESTEPS):
-        # Animate each body.
+        # Initialize each body.
         for body in bodies:
-            xpos = float(file.readline())
-            ypos = float(file.readline())
-            if (pdb): print("xpos:", xpos, "ypos:", ypos)
-            body.goto(xpos, ypos)
+            # TODO: figure out how to set radius!!!!!
+            body.shape("circle")
+            body.color("green")
+            # Dont draw path lines.
+            body.penup()
+            # We will move bodies ourselves, don't let python animate for us.
+            body.speed(0)
 
-    # To prevent everything from crashing.
-    turtle.done()
+
+        # Keep going until all timesteps have been animated.
+        for _ in range(TIMESTEPS):
+            # Animate each body.
+            for body in bodies:
+                xpos = float(file.readline())
+                ypos = float(file.readline())
+                if (pdb): print("xpos:", xpos, "ypos:", ypos)
+                body.goto(xpos, ypos)
+
+        # To prevent everything from crashing.
+        turtle.done()
+    # END if()
 
 # Dont forget to bring a towel!
 file.close()

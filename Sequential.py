@@ -116,6 +116,8 @@ def init():
         file.write("\n")
         file.write(str(YMAX))
         file.write("\n")
+        file.write(str(ENABLE_GUI))
+        file.write("\n")
 
     # Close the file.
     file.close()
