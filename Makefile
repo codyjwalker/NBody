@@ -3,7 +3,7 @@ CFLAGS = -Wall -g -std=gnu99 -pthread
 
 .PHONY : all clean
 
-all : sequential parallel 3dsequential 3dparallel
+all : sequential parallel 3dsequential 3dparallel nBody
 
 sequential : sequential.c
 	$(CC) $(CFLAGS) sequential.c -o sequential -lm
@@ -17,5 +17,8 @@ parallel : parallel.c
 3dparallel : 3dparallel.c
 	$(CC) $(CFLAGS) 3dparallel.c -o 3dparallel -lm
 
+nBody : nBody.c
+	$(CC) $(CFLAGS) nBody.c -o nBody -lm
+
 clean :
-	/bin/rm -f sequential parallel 3dsequential 3dparallel
+	/bin/rm -f sequential parallel 3dsequential 3dparallel nBody
