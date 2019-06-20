@@ -20,6 +20,7 @@
  " --------------------------------------------------------------------------"""
 
 # TODO: SPEED UP WITH DISTANCES LIST OR SUM10
+# TODO: FIGURE OUT WHETHER OR NOT TO MAKE THIS A CLASS FILE!!!
 
 import math
 import time
