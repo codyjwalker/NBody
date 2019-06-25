@@ -14,9 +14,9 @@
 
 #include "3dsequential.h"
 
-#define NUM_BODIES      20
-#define TIMESTEPS       300
-#define BODY_RADIUS     30
+#define NUM_BODIES      30
+#define TIMESTEPS       1000
+#define BODY_RADIUS     20
 #define BODY_MASS       1000000000
 
 int pdb = 1;
@@ -80,7 +80,7 @@ void init(int argc, char *argv[])
 
   // Set value for universal gravitational constant.
   grav_const = 6674.08;   // Scaled a bit so units are easier to work with.
-  special_g = 20 * grav_const * body_mass;
+  special_g = 2 * grav_const * body_mass;
 
 
 

@@ -10,6 +10,7 @@ parallel
 sequential
 3dparallel
 3dsequential
+nBody
 testie.txt
 parameters.txt
 graphics_input.txt
