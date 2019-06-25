@@ -14,12 +14,12 @@
 
 #include "3dsequential.h"
 
-#define NUM_BODIES      3
-#define TIMESTEPS       30
-#define BODY_RADIUS     20
+#define NUM_BODIES      20
+#define TIMESTEPS       300
+#define BODY_RADIUS     30
 #define BODY_MASS       1000000000
 
-int pdb = 0;
+int pdb = 1;
 
 
 /* -------------------------------------------------------------------------- */
@@ -59,6 +59,8 @@ void init(int argc, char *argv[])
 //  timesteps = atoi(argv[3]);
 //  enable_gui = atoi(argv[4]);
 
+  enable_gui = 1;
+
   // Open file.
   file = fopen("gui_input.txt", "w");
 
@@ -78,7 +80,7 @@ void init(int argc, char *argv[])
 
   // Set value for universal gravitational constant.
   grav_const = 6674.08;   // Scaled a bit so units are easier to work with.
-  special_g = 2 * grav_const * body_mass;
+  special_g = 20 * grav_const * body_mass;
 
 
 
@@ -466,6 +468,7 @@ void export_positions(void)
 {
   int i;
 
+  /*
   for (i = 0; i < num_bodies; i++)
   {
     if (fprintf(file, "%lf ", position[i]->x) == EOF)
@@ -476,6 +479,28 @@ void export_positions(void)
     {
       error("ERROR!!! export_positions(): PROBLEM WITH fprintf()");
     }
+
+  }
+  */
+
+    for (i = 0; i < num_bodies; i++) {
+        float xpos = (position[i]->x) / 1000;
+        float ypos = (position[i]->y) / 1000;
+        float zpos = ((position[i]->z) / 1000) - 10.0;
+
+        if (fprintf(file, "%f ", xpos) == EOF)
+        {
+            error("ERROR!!! export_positions(): PROBLEM WITH fprintf()");
+        }
+        if (fprintf(file, "%f ", ypos) == EOF)
+        {
+            error("ERROR!!! export_positions(): PROBLEM WITH fprintf()");
+        }
+        if (fprintf(file, "%f ", zpos) == EOF)
+        {
+            error("ERROR!!! export_positions(): PROBLEM WITH fprintf()");
+        }
+
   }
   return;
 } /* END export_positions() */
@@ -529,7 +554,7 @@ int main(int argc, char *argv[])
     if (pdb) print_coordinates();
 
     // If GUI mode enabled write positions to file.
-//    if (enable_gui) export_positions();
+    if (enable_gui) export_positions();
   }
 
   // Record system's time immediately upon finishing simulation.
